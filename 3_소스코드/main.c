@@ -20,7 +20,8 @@ void shuffle(struct card *array, size_t n)
     }
 }
 
-void printCard(struct card c){
+void playACard(struct card c)
+{
     if(c.color == 'w'){
         if(c.n == 13) printf("WILD");
         else if(c.n == 14) printf("WILD+4");
@@ -32,7 +33,8 @@ void printCard(struct card c){
 }
 
 // 색 입력받기
-char askColor(){
+char chooseColor()
+{
     printf("색 선택 (r/g/b/y): ");
     char c;
     scanf(" %c", &c);
@@ -81,9 +83,9 @@ int main()
     int turn = 0;
 
     while(true){
-        printf("\n======================================\n");
+        printf("\n############################################\n");
         printf("현재 버림패: ");
-        printCard(pile);
+        playACard(pile);
         printf("\n");
 		// 봇 턴
         if(turn % 2 == 0){
@@ -108,7 +110,7 @@ int main()
             else {
                 pile = oHand[i];
                 printf("카드를 냄 : ");
-                printCard(pile);
+                playACard(pile);
                 printf("\n");
 
                 for(int j=i; j<oCount-1; j++) oHand[j] = oHand[j+1];
@@ -121,7 +123,7 @@ int main()
                     printf("상대가 색을 %c 로 변경!\n", cc);
                 }
 
-                // 능력 카드 처리
+                // 능력
                 if(pile.n == 10){ // SKIP
                     printf("플레이어 턴 스킵!\n");
                     turn++;
@@ -150,7 +152,7 @@ int main()
             printf("당신의 패 (%d장):\n", pCount);
             for(int i = 0; i < pCount; i++){
                 printf("%d: ", i);
-                printCard(pHand[i]);
+                playACard(pHand[i]);
                 printf("\n");
             }
 
@@ -173,7 +175,7 @@ int main()
                 else{
                     pile = c;
                     printf("카드를 냄: ");
-                    printCard(pile);
+                    playACard(pile);
                     printf("\n");
 
                     for(int j=choice; j<pCount-1; j++)
@@ -182,7 +184,7 @@ int main()
 
                     // wild 색 선택
                     if(pile.color == 'w'){
-                        pile.color = askColor();
+                        pile.color = chooseColor();
                     }
 
                     if(pile.n == 10){ // skip
